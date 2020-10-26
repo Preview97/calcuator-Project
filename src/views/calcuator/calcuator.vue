@@ -3,7 +3,7 @@
     <b-row cols="1">
       <h2>{{modeFlag}}</h2>
       <b-input v-model="formulaShow" class="inputbox"></b-input>
-      <b-input v-model="result" class="inputbox"></b-input>
+      <b-input v-model="resultShow" class="inputbox"></b-input>
     </b-row>
     <b-row cols="2">
       <b-col lg="9">
@@ -117,14 +117,13 @@ props: {
       DataApi:"",
       formulaCal:"",
       formulaShow:"",
-      Num:"",
+      resultShow:"",
       i:0,
       arrData:{...defaultArrData}
     };
   },
   methods: {
-    clickNum(e) {
-        this.numData+=e;      
+    clickNum(e) {      
         this.formulaShow+=e;
         this.formulaCal+=e;
     },
@@ -133,13 +132,14 @@ props: {
       this.formulaCal = this.formulaCal + '%2b';
     },
     clickCal(){
+      this.resultShow=""; 
       Axios
       .get(apiURL+this.formulaCal)
       .then(response => {
-       this.result = response.data;
+       this.resultShow = response.data;
       this.arrData={
         date : new Date().toLocaleString(),
-        result : this.result,
+        result : this.resultShow,
         mode: this.modeFlag,
         formula:this.formulaShow
       }
@@ -147,7 +147,7 @@ props: {
        })
     },
     onReset(){
-      this.numData="";      
+      this.resultShow="";      
         this.formulaShow=""; 
         this.formulaCal=""; 
         this.DataApi=""; 
