@@ -4,7 +4,7 @@
   <b-row cols="12" >
     <b-col lg="3"> <calcuator ref="calcuator" modeFlag="calcuator1" /></b-col>
     <b-col lg="3"><calcuator ref="calcuator" modeFlag="calcuator2"/></b-col>
-   <b-col lg="3"><showSearch ref="showSearch"/> <div v-for="dataArr in dataArr" v-bind:key="dataArr">{{ dataArr.result }}{{ dataArr.mode}}</div></b-col>
+   <b-col lg="6"><showSearch ref="showSearch"/></b-col>
   </b-row>
 </b-container>
   </div>

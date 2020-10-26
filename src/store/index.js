@@ -6,19 +6,20 @@ Vue.use(Vuex)
 
 
 export default new Vuex.Store({
+  
   state: {
     data:"",
     con:"",
-    Datacal:[],
-    dataRecStsItems:[]
+    dropdownData:[],
+    Datacal:[]
+
   },
   mutations: {
     setDataRecStsItems(state, data) {
-      state.dataRecStsItems = data;
+      state.dropdownData = data;
     },
     setDate(state,data){
       state.Datacal.push(data);
-      console.log(data);
     }
   },
   actions: {
@@ -30,16 +31,15 @@ export default new Vuex.Store({
       return new Promise(resolve => {
         let data = [
           {
-            recordStatus: "A",
-            DataString: "Active"
+            value: "R",
+            text: "Result"
           },
           {
-            recordStatus: "N",
-            DataString: "Inactive"
+            value: "D",
+            text: "Date"
           }
         ];
         commit("setDataRecStsItems", data);
-        console.log("dataRecStsItems", data);
         resolve(true);
       });
     },

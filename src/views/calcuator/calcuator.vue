@@ -1,11 +1,12 @@
 <template>
-  <b-card  style="margin-top: 20px;">
+<div style="margin-top: 20px;">
+  <h2>{{modeFlag}}</h2>
+  <b-card  >
     <b-row cols="1">
-      <h2>{{modeFlag}}</h2>
-      <b-input v-model="formulaShow" class="inputbox"></b-input>
-      <b-input v-model="resultShow" class="inputbox"></b-input>
+      <b-input v-model="formulaShow" style="text-align:right;" class="inputbox"></b-input>
+      <b-input v-model.number="resultShow" :disabled="true" style="text-align:right;"  class="number"></b-input>
     </b-row>
-    <b-row cols="2">
+    <b-row cols="2" style="margin-top: 5px;">
       <b-col lg="9">
         <b-row cols="3">
           <b-button class="styleButton" type="submit" variant="outline-primary" @click="onReset"
@@ -84,6 +85,7 @@
       </b-col>
     </b-row>
   </b-card>
+</div>
 </template>
 
 <script>
@@ -107,17 +109,15 @@ props: {
   data() {
     let defaultArrData={
       date:null,
-      result:"",
+      result:0,
       mode:"",
-      formula:""
+      formula:"",
+      tiem:""
     }
     return {
-      numData:"",
-      dateToday: new Date().toLocaleString(),
-      DataApi:"",
       formulaCal:"",
       formulaShow:"",
-      resultShow:"",
+      resultShow:0,
       i:0,
       arrData:{...defaultArrData}
     };
@@ -132,25 +132,24 @@ props: {
       this.formulaCal = this.formulaCal + '%2b';
     },
     clickCal(){
-      this.resultShow=""; 
       Axios
       .get(apiURL+this.formulaCal)
       .then(response => {
-       this.resultShow = response.data;
+         this.resultShow=response.data;
       this.arrData={
-        date : new Date().toLocaleString(),
+        date : new Date().toLocaleDateString(),
+        time : new Date().toLocaleTimeString(),
         result : this.resultShow,
-        mode: this.modeFlag,
+        mode:  this.modeFlag,
         formula:this.formulaShow
-      }
-       this.$store.state.Datacal.push(this.arrData)
+      };
+       this.$store.state.Datacal.push(this.arrData);
        })
     },
     onReset(){
-      this.resultShow="";      
+      this.resultShow=0;      
         this.formulaShow=""; 
         this.formulaCal=""; 
-        this.DataApi=""; 
     }
   },
    mounted () {
